@@ -32,10 +32,20 @@ def get_nifty_stocks():
 
     return df[df["SEM_TRADING_SYMBOL"].isin(nifty50)]
 def get_live_quotes(security_ids):
+    url = "https://api.dhan.co/v2/marketfeed/quote"
+
+    headers = {
+        "access-token": DHAN_ACCESS_TOKEN,
+        "client-id": DHAN_CLIENT_ID,
+        "Content-Type": "application/json"
+    }
+
     payload = {
         "NSE_EQ": security_ids
     }
-    return dhan.quote_data(payload)
+
+    response = requests.post(url, headers=headers, json=payload)
+    return response.json()
 
 
 def get_historical_data(security_id, from_date, to_date):
