@@ -209,8 +209,8 @@ for _, row in scanner.iterrows():
     )
 
     last_candle = today_5m.iloc[-1]
-
-rvol = last_candle["volume"] / today_5m["volume"].tail(20).mean()
+avg_volume = today_5m["volume"].tail(20).mean()
+rvol = 0 if avg_volume == 0 else last_candle["volume"] / avg_volume
 
 buy = buy_signal(last_candle, previous_day_high, rvol)
 sell = sell_signal(last_candle, previous_day_high, rvol)
