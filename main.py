@@ -240,6 +240,9 @@ if signal_key not in sent_signals:
 
         send_photo(chart, trade)
         os.remove(chart)
+        print("Completed:", row["SEM_TRADING_SYMBOL"])
+        rank += 1
+        print("Telegram BUY sent successfully.")
 
     elif sell:
         sent_signals.add(signal_key)
