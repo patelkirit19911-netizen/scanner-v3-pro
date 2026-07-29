@@ -30,3 +30,18 @@ def get_nifty_stocks():
     ]
 
     return df[df["SEM_TRADING_SYMBOL"].isin(nifty50)]
+def get_live_quotes(security_ids):
+    payload = {
+        "NSE_EQ": security_ids
+    }
+    return dhan.quote_data(payload)
+
+
+def get_historical_data(security_id, from_date, to_date):
+    return dhan.intraday_minute_data(
+        security_id=security_id,
+        exchange_segment="NSE_EQ",
+        instrument_type="EQUITY",
+        from_date=from_date,
+        to_date=to_date
+    )
