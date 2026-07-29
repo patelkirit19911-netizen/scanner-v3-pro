@@ -246,9 +246,9 @@ if signal_key not in sent_signals:
 
     elif sell:
         sent_signals.add(signal_key)
-
-        row["entry"] = previous_day_high
-
+        
+        row["entry"] = previous_day_low
+        
         trade = (
             f"🔴 SELL SIGNAL\n"
             f"<b>{row['SEM_TRADING_SYMBOL']}</b>\n"
@@ -261,7 +261,7 @@ if signal_key not in sent_signals:
 
         chart = create_chart(today_5m.tail(35),
                              row["SEM_TRADING_SYMBOL"],
-                             previous_day_high)
+                             previous_day_low)
 
         send_photo(chart, trade)
         os.remove(chart)
