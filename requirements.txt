@@ -1,1 +1,7 @@
-
+requests
+pandas
+ta
+python-dotenv
+dhanhq==2.2.0
+matplotlib
+mplfinance
