@@ -56,9 +56,11 @@ print("Type:", type(security_ids))
 quotes = get_live_quotes(security_ids[:1000])
 print(type(quotes))
 print(quotes)
-if not quotes["data"]["NSE_EQ"]:
-    print("No live quote data received")
+
+if quotes.get("status") != "success":
+    print("Quote API Error:", quotes)
     exit()
+
 rows = []
 for security_id, data in quotes["data"]["NSE_EQ"].items():
     rows.append({
