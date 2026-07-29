@@ -9,10 +9,10 @@ def short_signal(df, previous_day_high, nifty_bearish):
     """
     Short signal logic
     """
-def short_signal(df, previous_day_high, nifty_bearish):
 
     last = df.iloc[-1]
 
+    # PDH Rejection
     pdh_rejection = (
         last["high"] >= previous_day_high and
         last["close"] < previous_day_high
@@ -21,6 +21,12 @@ def short_signal(df, previous_day_high, nifty_bearish):
     if not pdh_rejection:
         return None
 
+    # Red Candle
+    red_candle = last["close"] < last["open"]
+
+    if not red_candle:
+        return None
+
     return {
         "signal": "SHORT"
-    }   
+    }
