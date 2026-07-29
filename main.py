@@ -44,7 +44,7 @@ def create_chart(df, symbol, level):
     )
 
     return filename
-print("Loading NIFTY100 Stocks...")
+print("Loading NIFTY 50 Stocks...")
 
 stocks = get_nifty_stocks()
 print(f"Loaded {len(stocks)} NIFTY Stocks")
@@ -162,22 +162,18 @@ for _, row in scanner.iterrows():
     last_date = history_df.index[-1]
     print("Last Date:", last_date)
     print(history_df.index[-5:])
-    current_week = last_date.isocalendar().week
-    current_year = last_date.isocalendar().year
-    previous_week = current_week - 1
-    previous_week_year = current_year
+    previous_date = last_date.date() - timedelta(days=1)
 
-    if previous_week == 0:
-        previous_week = 52
-        previous_week_year -= 1
-    print("Last Price:", row["last_price"])
+    previous_day_df = history_df[
+    history_df.index.date == previous_date
+    ]
 
+    if previous_day_df.empty:
+        print("Previous day data not found")
+        continue
 
-    previous_week_df = history_df[
-    (history_df.index.isocalendar().week == previous_week) &
-    (history_df.index.isocalendar().year == previous_week_year)]
-
-    previous_week_high = previous_week_df["high"].max()
+    previous_day_high = previous_day_df["high"].max()
+    previous_day_low = previous_day_df["low"].min()
     if previous_week_df.empty:
         print("Previous week data not found")
         continue
