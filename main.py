@@ -174,10 +174,8 @@ for _, row in scanner.iterrows():
 
     previous_day_high = previous_day_df["high"].max()
     previous_day_low = previous_day_df["low"].min()
-    if previous_week_df.empty:
-        print("Previous week data not found")
-        continue
-    print("Previous Week High:", previous_week_high)
+    print("Previous Day High:", previous_day_high)
+    print("Previous Day Low:", previous_day_low)
     print("Symbol:", row["SEM_TRADING_SYMBOL"])
     print("Last Price:", row["last_price"])
 
@@ -194,7 +192,7 @@ for _, row in scanner.iterrows():
     print("Today DF:", len(today_df))
     print("Today DF Length:", len(today_df))
     print(today_df.columns.tolist())
-    print("Previous Week High:", previous_week_high)
+    print("Previous Day High:", previous_day_high)
     print("Today's High:", today_df["high"].max())
     print("Today's Close:", today_df["close"].max())
     today_5m = (
