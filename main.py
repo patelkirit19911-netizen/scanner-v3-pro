@@ -1,4 +1,5 @@
 from market_data import get_nifty_stocks, get_live_quotes, get_historical_data
+from strategy import short_signal
 import ta
 import pandas as pd
 from ta.trend import EMAIndicator
