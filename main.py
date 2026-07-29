@@ -54,6 +54,8 @@ security_ids = stocks["SEM_SMST_SECURITY_ID"].astype(int).tolist()
 print("Security IDs:", security_ids[:10])
 print("Type:", type(security_ids))
 quotes = get_live_quotes(security_ids[:1000])
+print(type(quotes))
+print(quotes)
 if not quotes["data"]["NSE_EQ"]:
     print("No live quote data received")
     exit()
