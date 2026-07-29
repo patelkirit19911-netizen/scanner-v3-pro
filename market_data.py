@@ -1,6 +1,6 @@
 import pandas as pd
 import requests
-from dhanhq import dhanhq
+from dhanhq import dhanhq, DhanContext
 
 from config import (
     DHAN_CLIENT_ID,
@@ -8,7 +8,8 @@ from config import (
     CSV_URL
 )
 
-dhan = dhanhq(DHAN_CLIENT_ID, DHAN_ACCESS_TOKEN)
+dhan_context = DhanContext(DHAN_CLIENT_ID, DHAN_ACCESS_TOKEN)
+dhan = dhanhq(dhan_context)
 def load_scrip_master():
     df = pd.read_csv(CSV_URL)
     return df
