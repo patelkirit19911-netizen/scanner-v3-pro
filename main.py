@@ -1,5 +1,5 @@
 from market_data import get_nifty_stocks, get_live_quotes, get_historical_data
-from strategy import short_signal
+from strategy import buy_signal, sell_signal
 import ta
 import pandas as pd
 from ta.trend import EMAIndicator
@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import os
 print(dhanhq.__file__)
 sent_signals = set()
-def create_chart(df, symbol, previous_week_high):
+def create_chart(df, symbol, level):
     df = df.copy()
     df.index = pd.to_datetime(df.index)
     df = df.rename(columns={
@@ -26,7 +26,7 @@ def create_chart(df, symbol, previous_week_high):
     filename = f"{symbol}.png"
     df = df.tail(35)
     ap = mpf.make_addplot(
-    [previous_week_high] * len(df),
+    [level] * len(df),
     color="blue",
     width=3
     )
