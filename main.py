@@ -213,73 +213,82 @@ for _, row in scanner.iterrows():
     })
     .dropna()
     )
-print("5m rows =", len(today_5m), row["SEM_TRADING_SYMBOL"])
+        print("5m rows =", len(today_5m), row["SEM_TRADING_SYMBOL"])
 
-last_candle = today_5m.iloc[-1]
-print("Last candle =", row["SEM_TRADING_SYMBOL"])    
-avg_volume = today_5m["volume"].tail(20).mean()
-rvol = 0 if avg_volume == 0 else last_candle["volume"] / avg_volume
-print("RVOL =", rvol, row["SEM_TRADING_SYMBOL"])
-buy = buy_signal(last_candle, previous_day_high, rvol)
-print(
-    f"{row['SEM_TRADING_SYMBOL']} | BUY={buy} | "
-    f"Open={last_candle['open']} | Close={last_candle['close']} | "
-    f"PrevHigh={previous_day_high} | RVOL={rvol:.2f}"
-)
-sell = sell_signal(last_candle, previous_day_high, rvol)
-print("Finished:", row["SEM_TRADING_SYMBOL"])
-signal_key = (row["SEM_TRADING_SYMBOL"], last_date.strftime("%Y-%m-%d"))
+    last_candle = today_5m.iloc[-1]
+    print("Last candle =", row["SEM_TRADING_SYMBOL"])
 
-if signal_key not in sent_signals:
+    avg_volume = today_5m["volume"].tail(20).mean()
+    rvol = 0 if avg_volume == 0 else last_candle["volume"] / avg_volume
 
-    if buy:
-        sent_signals.add(signal_key)
+    print("RVOL =", rvol, row["SEM_TRADING_SYMBOL"])
 
-        row["entry"] = previous_day_high
+    buy = buy_signal(last_candle, previous_day_high, rvol)
 
-        trade = (
-            f"🟢 BUY SIGNAL\n"
-            f"<b>{row['SEM_TRADING_SYMBOL']}</b>\n"
-            f"Entry : ₹{row['entry']}\n"
-            f"SL : ₹{row['sl']}\n"
-            f"T1 : ₹{row['target1']}\n"
-            f"T2 : ₹{row['target2']}\n"
-            f"RVOL : {rvol:.2f}x"
-        )
+    print(
+        f"{row['SEM_TRADING_SYMBOL']} | BUY={buy} | "
+        f"Open={last_candle['open']} | Close={last_candle['close']} | "
+        f"PrevHigh={previous_day_high} | RVOL={rvol:.2f}"
+    )
 
-        chart = create_chart(today_5m.tail(35),
-                             row["SEM_TRADING_SYMBOL"],
-                             previous_day_high)
+    sell = sell_signal(last_candle, previous_day_high, rvol)
 
-        send_photo(chart, trade)
-        os.remove(chart)
-        print("Completed:", row["SEM_TRADING_SYMBOL"])
-        rank += 1
-        print("Telegram BUY sent successfully.")
+    print("Finished:", row["SEM_TRADING_SYMBOL"])
 
-    elif sell:
-        sent_signals.add(signal_key)
-        
-        row["entry"] = previous_day_low
-        
-        trade = (
-            f"🔴 SELL SIGNAL\n"
-            f"<b>{row['SEM_TRADING_SYMBOL']}</b>\n"
-            f"Entry : ₹{row['entry']}\n"
-            f"SL : ₹{row['sl']}\n"
-            f"T1 : ₹{row['target1']}\n"
-            f"T2 : ₹{row['target2']}\n"
-            f"RVOL : {rvol:.2f}x"
-        )
+    signal_key = (row["SEM_TRADING_SYMBOL"], last_date.strftime("%Y-%m-%d"))
 
-        chart = create_chart(today_5m.tail(35),
-                             row["SEM_TRADING_SYMBOL"],
-                             previous_day_low)
+    if signal_key not in sent_signals:
 
-        send_photo(chart, trade)
-        os.remove(chart)
-        print("Completed:", row["SEM_TRADING_SYMBOL"])
-        rank += 1
-        print("Telegram message sent successfully.")
-print("Scanner loop completed")
+        if buy:
+            sent_signals.add(signal_key)
 
+            row["entry"] = previous_day_high
+
+            trade = (
+                f"🟢 BUY SIGNAL\n"
+                f"<b>{row['SEM_TRADING_SYMBOL']}</b>\n"
+                f"Entry : ₹{row['entry']}\n"
+                f"SL : ₹{row['sl']}\n"
+                f"T1 : ₹{row['target1']}\n"
+                f"T2 : ₹{row['target2']}\n"
+                f"RVOL : {rvol:.2f}x"
+            )
+
+            chart = create_chart(
+                today_5m.tail(35),
+                row["SEM_TRADING_SYMBOL"],
+                previous_day_high
+            )
+
+            send_photo(chart, trade)
+            os.remove(chart)
+            print("Completed:", row["SEM_TRADING_SYMBOL"])
+            rank += 1
+            print("Telegram BUY sent successfully.")
+
+        elif sell:
+            sent_signals.add(signal_key)
+
+            row["entry"] = previous_day_low
+
+            trade = (
+                f"🔴 SELL SIGNAL\n"
+                f"<b>{row['SEM_TRADING_SYMBOL']}</b>\n"
+                f"Entry : ₹{row['entry']}\n"
+                f"SL : ₹{row['sl']}\n"
+                f"T1 : ₹{row['target1']}\n"
+                f"T2 : ₹{row['target2']}\n"
+                f"RVOL : {rvol:.2f}x"
+            )
+
+            chart = create_chart(
+                today_5m.tail(35),
+                row["SEM_TRADING_SYMBOL"],
+                previous_day_low
+            )
+
+            send_photo(chart, trade)
+            os.remove(chart)
+            print("Completed:", row["SEM_TRADING_SYMBOL"])
+            rank += 1
+            print("Telegram SELL sent successfully.")
