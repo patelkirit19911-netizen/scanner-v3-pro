@@ -213,7 +213,7 @@ for _, row in scanner.iterrows():
     })
     .dropna()
     )
-        print("5m rows =", len(today_5m), row["SEM_TRADING_SYMBOL"])
+    print("5m rows =", len(today_5m), row["SEM_TRADING_SYMBOL"])
 
     last_candle = today_5m.iloc[-1]
     print("Last candle =", row["SEM_TRADING_SYMBOL"])
