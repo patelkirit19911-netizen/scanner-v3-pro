@@ -213,11 +213,13 @@ for _, row in scanner.iterrows():
     })
     .dropna()
     )
+print("5m rows =", len(today_5m), row["SEM_TRADING_SYMBOL"])
 
-    last_candle = today_5m.iloc[-1]
+last_candle = today_5m.iloc[-1]
+print("Last candle =", row["SEM_TRADING_SYMBOL"])    
 avg_volume = today_5m["volume"].tail(20).mean()
 rvol = 0 if avg_volume == 0 else last_candle["volume"] / avg_volume
-
+print("RVOL =", rvol, row["SEM_TRADING_SYMBOL"])
 buy = buy_signal(last_candle, previous_day_high, rvol)
 print(
     f"{row['SEM_TRADING_SYMBOL']} | BUY={buy} | "
