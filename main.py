@@ -217,6 +217,11 @@ avg_volume = today_5m["volume"].tail(20).mean()
 rvol = 0 if avg_volume == 0 else last_candle["volume"] / avg_volume
 
 buy = buy_signal(last_candle, previous_day_high, rvol)
+print(
+    f"{row['SEM_TRADING_SYMBOL']} | BUY={buy} | "
+    f"Open={last_candle['open']} | Close={last_candle['close']} | "
+    f"PrevHigh={previous_day_high} | RVOL={rvol:.2f}"
+)
 sell = sell_signal(last_candle, previous_day_high, rvol)
 
 signal_key = (row["SEM_TRADING_SYMBOL"], last_date.strftime("%Y-%m-%d"))
