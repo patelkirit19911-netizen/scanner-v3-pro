@@ -140,7 +140,7 @@ for _, row in scanner.iterrows():
     print("ROW SYMBOL =", repr(row["SEM_TRADING_SYMBOL"]))
     print("SECURITY ID =", row["security_id"])
     to_date = datetime.now().strftime("%Y-%m-%d")
-    from_date = (datetime.now() - timedelta(days=45)).strftime("%Y-%m-%d")
+    from_date = (datetime.now() - timedelta(days=10)).strftime("%Y-%m-%d")
     print("Security ID:", row["security_id"])   
     history = get_historical_data(int(row["security_id"]),from_date,to_date)
     print("History Status =", history.get("status"))
@@ -245,12 +245,13 @@ for _, row in scanner.iterrows():
             row["entry"] = previous_day_high
 
             trade = (
-                f"🟢 BUY SIGNAL\n"
-                f"<b>{row['SEM_TRADING_SYMBOL']}</b>\n"
-                f"Entry : ₹{row['entry']}\n"
-                f"SL : ₹{row['sl']}\n"
-                f"T1 : ₹{row['target1']}\n"
-                f"T2 : ₹{row['target2']}\n"
+                f"⭐ {row['SEM_TRADING_SYMBOL']} BUY\n\n"
+                f"🕒 Candle Close : {last_date.strftime('%H:%M')}\n\n"
+                f"Entry : {row['entry']}\n"
+                f"SL : {row['sl']}\n"
+                f"T1 : {row['target1']}\n"
+                f"Target : {row['target2']}\n\n"
+                f"📈 PDH Breakout + GREEN\n"
                 f"RVOL : {rvol:.2f}x"
             )
 
@@ -272,12 +273,13 @@ for _, row in scanner.iterrows():
             row["entry"] = previous_day_low
 
             trade = (
-                f"🔴 SELL SIGNAL\n"
-                f"<b>{row['SEM_TRADING_SYMBOL']}</b>\n"
-                f"Entry : ₹{row['entry']}\n"
-                f"SL : ₹{row['sl']}\n"
-                f"T1 : ₹{row['target1']}\n"
-                f"T2 : ₹{row['target2']}\n"
+                f"⭐ {row['SEM_TRADING_SYMBOL']} SHORT\n\n"
+                f"🕒 Candle Close : {last_date.strftime('%H:%M')}\n\n"
+                f"Entry : {row['entry']}\n"
+                f"SL : {row['sl']}\n"
+                f"T1 : {row['target1']}\n"
+                f"Target : {row['target2']}\n\n"
+                f"📉 PDH Touch + RED\n"
                 f"RVOL : {rvol:.2f}x"
             )
 
