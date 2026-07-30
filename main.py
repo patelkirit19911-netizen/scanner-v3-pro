@@ -291,4 +291,5 @@ for _, row in scanner.iterrows():
             os.remove(chart)
             print("Completed:", row["SEM_TRADING_SYMBOL"])
             rank += 1
-        print("Telegram SELL sent successfully.")
+            print("Telegram SELL sent successfully.")
+print("Scanner loop completed")
