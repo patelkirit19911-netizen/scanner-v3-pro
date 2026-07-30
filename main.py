@@ -135,6 +135,8 @@ for _, row in scanner.iterrows():
     if row["last_price"] <= 0:
         continue
     print("Processing:", row["SEM_TRADING_SYMBOL"])
+    print("=" * 50)
+    print("Processing:", row["SEM_TRADING_SYMBOL"])
     print("ROW SYMBOL =", repr(row["SEM_TRADING_SYMBOL"]))
     print("SECURITY ID =", row["security_id"])
     to_date = datetime.now().strftime("%Y-%m-%d")
@@ -223,7 +225,7 @@ print(
     f"PrevHigh={previous_day_high} | RVOL={rvol:.2f}"
 )
 sell = sell_signal(last_candle, previous_day_high, rvol)
-
+print("Finished:", row["SEM_TRADING_SYMBOL"])
 signal_key = (row["SEM_TRADING_SYMBOL"], last_date.strftime("%Y-%m-%d"))
 
 if signal_key not in sent_signals:
